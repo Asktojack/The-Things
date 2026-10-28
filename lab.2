@@ -1,0 +1,29 @@
+import hashlib
+import time
+
+class Block:
+    def __init__(self, index, previous_hash, data, timestamp=None):
+        self.index = index
+        self.previous_hash = previous_hash
+        self.timestamp = timestamp or time.time()
+        self.data = data
+        self.hash = self.hash_block()
+
+    def hash_block(self):
+        value = f"{self.index}{self.previous_hash}{self.timestamp}{self.data}"
+        return hashlib.sha256(value.encode()).hexdigest()
+
+def create_genesis_block():
+    return Block(0, "0", "Genesis Block")
+
+def next_block(last_block, data):
+    index = last_block.index + 1
+    return Block(index, last_block.hash, data)
+
+# Blockchain
+blockchain = [create_genesis_block()]
+for i in range(5):
+    blockchain.append(next_block(blockchain[-1], f"Block #{i+1}"))
+
+for block in blockchain:
+    print(vars(block))
