@@ -1,0 +1,21 @@
+import hashlib
+
+def hash_leaf(data):
+    return hashlib.sha256(data.encode()).hexdigest()
+
+def merkle_root(leaves):
+    if len(leaves) % 2 != 0:
+        leaves.append(leaves[-1])
+    while len(leaves) > 1:
+        temp = []
+        for i in range(0, len(leaves), 2):
+            combined = leaves[i] + leaves[i+1]
+            temp.append(hashlib.sha256(combined.encode()).hexdigest())
+        leaves = temp
+    return leaves[0]
+
+transactions = ["tx1", "tx2", "tx3", "tx4"]
+leaves = [hash_leaf(tx) for tx in transactions]
+root = merkle_root(leaves)
+print("Merkle Root:", root)
+
