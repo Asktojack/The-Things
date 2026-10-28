@@ -1,0 +1,10 @@
+1. Generate Public and Private Key using OpenSSL
+
+import subprocess
+
+# Generate private key
+subprocess.run(["openssl", "genpkey", "-algorithm", "RSA", "-out", "private_key.pem"])
+
+# Generate public key
+subprocess.run(["openssl", "rsa", "-pubout", "-in", "private_key.pem", "-out", "public_key.pem"])
+
