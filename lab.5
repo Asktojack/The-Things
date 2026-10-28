@@ -1,0 +1,20 @@
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.balance = 100
+
+class CryptoCoin:
+    def transfer(self, sender, receiver, amount):
+        if sender.balance >= amount:
+            sender.balance -= amount
+            receiver.balance += amount
+            print(f"{amount} transferred from {sender.name} to {receiver.name}")
+        else:
+            print("Insufficient balance!")
+
+alice = User("Alice")
+bob = User("Bob")
+
+cc = CryptoCoin()
+cc.transfer(alice, bob, 30)
+print(f"Alice: {alice.balance}, Bob: {bob.balance}")
